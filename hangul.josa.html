@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>한글 조사 출력기 hangul.josa.js(jQuery plugin)</title>
+    <meta name="viewport" content="initial-scale=1">
+    <style>
+        h1{font-size:24px;}
+        h2{font-size:20px;}
+        body,table,select{font-size:12px;line-height: 1.4;}
+        blockquote,
+        fieldset{margin:1em 0;background:#333;color:#fff;font-family:monospace;padding:1em;border:0;}
+        blockquote{white-space:pre;padding: 0 1em;}
+        input,select{vertical-align:middle;margin:0;padding:0;}
+        figure{margin:1em 0;overflow: auto;}
+        figcaption{font-weight:700;}
+        table{width:100%;border-collapse:collapse;border-top:1px solid #ccc;border-left:1px solid #ccc;}
+        th,td{padding:5px;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
+        th{background:#eee;}
+        em{font-style:normal;color:red;}
+        .josa{color:red;}
+    </style>
+</head>
+<body>
+    <h1>한글 조사 출력기 hangul.josa.js(jQuery plugin)</h1>
+    <p>맥락에 맞는 한글 조사(은/는, 이/가, 을/를, 와/과, 로/으로)를 붙여주는 기능을 합니다. 한글 뿐만 아니라 숫자와 알파벳 발음 끝에 종성이 있는지 여부에 따라 적절한 조사를 붙여 줍니다.</p>
+    <section>
+        <h2>한글 조사 출력기 사용법</h2>
+        <p>jquery.js 와 hangul.josa.js 를 순서대로 로드한 다음 조사를 붙일 DOM 요소에 .josa() 메서드를 통해 적절한 인자를 넘겨주면 실행합니다.</p>
+        <blockquote>
+&lt;script src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;hangul.josa.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    $(&quot;.e&quot;).josa(&quot;이/가&quot;); // 주격 조사(이, 가)를 붙여야 하는 경우 &quot;이/가&quot;를 인자로 넘긴다.
+    $(&quot;.e&quot;).josa(&quot;을/를&quot;); // 목적격 조사(을, 를)를 붙여야 하는 경우 &quot;을/를&quot;을 인자로 넘긴다.
+    $(&quot;.e&quot;).josa(&quot;은/는&quot;); // 보격 조사(은, 는)를 붙여야 하는 경우 &quot;은/는&quot;을 인자로 넘긴다.
+    $(&quot;.e&quot;).josa(&quot;와/과&quot;); // 접속 조사(와, 과)를 붙여야 하는 경우 &quot;와/과&quot;를 인자로 넘긴다.
+    $(&quot;.e&quot;).josa(&quot;로/으로&quot;); // 부사격 조사(로, 으로)를 붙여야 하는 경우 &quot;로/으로&quot;를 인자로 넘긴다.
+&lt;/script&gt;
+        </blockquote>
+    </section>
+    <section>
+        <h2>한글 조사 출력 테스트 케이스</h2>
+        <fieldset>
+            $(&quot;.e&quot;).josa(&quot;
+            <select id="test-case">
+                <option>실행 안 함</option>
+                <option>이/가</option>
+                <option>을/를</option>
+                <option>은/는</option>
+                <option>와/과</option>
+                <option>로/으로</option>
+            </select>
+            &quot;);
+        </fieldset>
+        <figure>
+            <figcaption>실행 결과 및 처리 로직</figcaption>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">제시어</th>
+                        <th scope="col">실행 결과</th>
+                        <th scope="col">이 결과가 나온 이유</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">사<em>과</em></th>
+                        <td><strong class="e">사과</strong></td>
+                        <td>마지막 문자에 종성이 없기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">능<em>금</em></th>
+                        <td><strong class="e">능금</strong></td>
+                        <td>마지막 문자에 종성이 있기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">사과 <em>3</em></th>
+                        <td><strong class="e">사과 3</strong></td>
+                        <td>&quot;사과 삼&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">사과 <em>9</em></th>
+                        <td><strong class="e">사과 9</strong></td>
+                        <td>&quot;사과 구&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">apple <em>3</em></th>
+                        <td><strong class="e">apple 3</strong></td>
+                        <td>&quot;애플 쓰리&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">apple <em>9</em></th>
+                        <td><strong class="e">apple 9</strong></td>
+                        <td>&quot;애플 나인&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">agend<em>a</em></th>
+                        <td><strong class="e">agenda</strong></td>
+                        <td>&quot;아젠다&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">bul<em>b</em></th>
+                        <td><strong class="e">bulb</strong></td>
+                        <td>&quot;벌브&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">cli<em>mb</em></th>
+                        <td><strong class="e">climb</strong></td>
+                        <td>&quot;클라임&quot;이라고 읽기 때문에(m 뒤에서 마지막 b 묵음 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">automati<em>c</em></th>
+                        <td><strong class="e">automatic</strong></td>
+                        <td>&quot;오토메틱&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">fun<em>d</em></th>
+                        <td><strong class="e">fund</strong></td>
+                        <td>&quot;펀드&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ac<em>e</em></th>
+                        <td><strong class="e">ace</strong></td>
+                        <td>&quot;에이스&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">subscri<em>be</em></th>
+                        <td><strong class="e">subscribe</strong></td>
+                        <td>&quot;서브스크립&quot;이라고 읽기 때문에(b 뒤에서 마지막 e 묵음 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">app<em>le</em></th>
+                        <td><strong class="e">apple</strong></td>
+                        <td>&quot;애플&quot;이라고 읽기 때문에(l 뒤에서 마지막 e 묵음 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">defi<em>ne</em></th>
+                        <td><strong class="e">define</strong></td>
+                        <td>&quot;디파인&quot;이라고 읽기 때문에(n 뒤에서 마지막 e 묵음 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">apprecia<em>te</em></th>
+                        <td><strong class="e">appreciate</strong></td>
+                        <td>&quot;어프리시에잇&quot;이라고 읽기 때문에(t 뒤에서 마지막 e 묵음 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">hal<em>f</em></th>
+                        <td><strong class="e">half</strong></td>
+                        <td>&quot;해프&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">dra<em>g</em></th>
+                        <td><strong class="e">drag</strong></td>
+                        <td>&quot;드래그&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">bei<em>ng</em></th>
+                        <td><strong class="e">being</strong></td>
+                        <td>&quot;비잉&quot;이라고 읽기 때문에(n 뒤에서 마지막 g 종성 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">touc<em>h</em></th>
+                        <td><strong class="e">touch</strong></td>
+                        <td>&quot;터치&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ant<em>i</em></th>
+                        <td><strong class="e">anti</strong></td>
+                        <td>&quot;안티&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">D<em>J</em></th>
+                        <td><strong class="e">DJ</strong></td>
+                        <td>&quot;디제이&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">brea<em>k</em></th>
+                        <td><strong class="e">break</strong></td>
+                        <td>&quot;브레이크&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">blo<em>ck</em></th>
+                        <td><strong class="e">block</strong></td>
+                        <td>&quot;블럭&quot;이라고 읽기 때문에(c 뒤에서 마지막 k 종성 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">bo<em>ok</em></th>
+                        <td><strong class="e">book</strong></td>
+                        <td>&quot;북&quot;이라고 읽기 때문에(o 뒤에서 마지막 k 종성 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">fee<em>l</em></th>
+                        <td><strong class="e">feel</strong></td>
+                        <td>&quot;필&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">confir<em>m</em></th>
+                        <td><strong class="e">confirm</strong></td>
+                        <td>&quot;컨펌&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">applicatio<em>n</em></th>
+                        <td><strong class="e">application</strong></td>
+                        <td>&quot;애플리케이션&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">espress<em>o</em></th>
+                        <td><strong class="e">espresso</strong></td>
+                        <td>&quot;에스프레소&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">dro<em>p</em></th>
+                        <td><strong class="e">drop</strong></td>
+                        <td>&quot;드롭&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">FA<em>Q</em></th>
+                        <td><strong class="e">FAQ</strong></td>
+                        <td>&quot;에프레이큐&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">fathe<em>r</em></th>
+                        <td><strong class="e">father</strong></td>
+                        <td>&quot;파더&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">addres<em>s</em></th>
+                        <td><strong class="e">address</strong></td>
+                        <td>&quot;어드레스&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">commen<em>t</em></th>
+                        <td><strong class="e">comment</strong></td>
+                        <td>&quot;코멘트&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">gur<em>u</em></th>
+                        <td><strong class="e">guru</strong></td>
+                        <td>&quot;구루&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">shi<em>v</em></th>
+                        <td><strong class="e">shiv</strong></td>
+                        <td>&quot;쉬브&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">flo<em>w</em></th>
+                        <td><strong class="e">flow</strong></td>
+                        <td>&quot;플로우&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">comple<em>x</em></th>
+                        <td><strong class="e">complex</strong></td>
+                        <td>&quot;콤플렉스&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">appl<em>y</em></th>
+                        <td><strong class="e">apply</strong></td>
+                        <td>&quot;어플라이&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">bi<em>z</em></th>
+                        <td><strong class="e">biz</strong></td>
+                        <td>&quot;비즈&quot;라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">父母</th>
+                        <td><strong class="e">父母</strong></td>
+                        <td>한글, 영문, 숫자 이외의 발음은 어떤 조사를 출력할지 알 수 없기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">부모!</th>
+                        <td><strong class="e">부모!</strong></td>
+                        <td>특수문자는 읽지 않기 때문에</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <td><strong class="e"></strong></td>
+                        <td>제시어 없는 경우</td>
+                    </tr>
+                </tbody>
+            </table>
+        </figure>
+    </section>
+    <footer>
+        <h2>저작권/라이선스</h2>
+        <p>Copyright (c) 2016 ChanMyeong Jeong | Under the MIT license.</p>
+    </footer>
+    <script src="jquery-1.12.0.min.js"></script>
+    <script src="hangul.josa.js"></script>
+    <script>
+        $(document).on("change", "#test-case", function(){
+            $(".e").josa($(this).find(":selected").val());
+        });
+    </script>
+</body>
+</html>
