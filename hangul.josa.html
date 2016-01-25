@@ -29,7 +29,7 @@
         <p>jquery.js 와 hangul.josa.js 를 순서대로 로드한 다음 조사를 붙일 DOM 요소에 .josa() 메서드를 통해 적절한 인자를 넘겨주면 실행합니다.</p>
         <blockquote>
 &lt;script src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;hangul.josa.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;hangul.josa.min.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
     $(&quot;.e&quot;).josa(&quot;이/가&quot;); // 주격 조사(이, 가)를 붙여야 하는 경우 &quot;이/가&quot;를 인자로 넘긴다.
     $(&quot;.e&quot;).josa(&quot;을/를&quot;); // 목적격 조사(을, 를)를 붙여야 하는 경우 &quot;을/를&quot;을 인자로 넘긴다.
@@ -287,11 +287,11 @@
         <h2>저작권/라이선스</h2>
         <p>Copyright (c) 2016 ChanMyeong Jeong | Under the MIT license.</p>
     </footer>
-    <script src="jquery-1.12.0.min.js"></script>
-    <script src="hangul.josa.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="hangul.josa.min.js"></script>
     <script>
         $(document).on("change", "#test-case", function(){
-            $(".e").josa($(this).find(":selected").val());
+            $(".e").josa( $(this).find(":selected").val() );
         });
     </script>
 </body>
