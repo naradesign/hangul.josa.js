@@ -7,26 +7,26 @@
     <style>
         h1{font-size:24px;}
         h2{font-size:20px;}
-        body,table,select,input{font-size:12px;line-height: 1.4;}
-        blockquote,
-        fieldset{margin:1em 0;background:#333;color:#fff;font-family:monospace;padding:1em;border:0;}
+        sup{color:#767676;font-size:11px;}
+        body,table,select,input{font-size:12px;line-height: 1.4;font-family:helvetica, sans-serif;}
+        blockquote,fieldset{margin:1em 0;background:#333;color:#fff;font-family:monospace;padding:1em;border:0;overflow:auto;}
         blockquote{white-space:pre;padding: 0 1em;}
         input,select{vertical-align:middle;margin:0;padding:0;}
         figure{margin:1em 0;overflow: auto;}
         figcaption{font-weight:700;}
         table{width:100%;border-collapse:collapse;border-top:1px solid #ccc;border-left:1px solid #ccc;}
-        th,td{padding:5px;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
+        th,td{padding:3px 5px;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
         th{background:#eee;}
         em{font-style:normal;color:red;}
         .josa{color:red;}
     </style>
 </head>
 <body>
-    <h1>한글 조사 출력기 hangul.josa.js(jQuery plugin)</h1>
-    <p>맥락에 맞는 한글 조사(은/는, 이/가, 을/를, 와/과, 로/으로)를 붙여주는 기능을 합니다. 한글 뿐만 아니라 숫자와 알파벳 발음 끝에 종성이 있는지 여부에 따라 적절한 조사를 붙여 줍니다.</p>
+    <h1>한글 조사 출력기 <a href="https://github.com/naradesign/hangul.josa.js">hangul.josa.js <sup>1.09KB</sup></a> <sup>jQuery plugin</sup></h1>
+    <p>맥락에 맞는 한글 조사(은/는, 이/가, 을/를, 와/과, 로/으로)를 붙여주는 기능을 합니다. 한글 뿐만 아니라 숫자와 알파벳 발음 끝에 종성이 있는지 여부에 따라 적절한 한글 조사를 붙여 줍니다.</p>
     <section>
         <h2>한글 조사 출력기 사용법</h2>
-        <p>jquery.js 와 hangul.josa.js 를 순서대로 로드한 다음 조사를 붙일 DOM 요소에 .josa() 메서드를 통해 적절한 인자를 넘겨주면 실행합니다.</p>
+        <p>jquery.min.js 와 hangul.josa.min.js 파일을 순서대로 로드한 다음 조사를 붙일 DOM 요소에 .josa() 메서드를 통해 적절한 인자(은/는, 이/가, 을/를, 와/과, 로/으로)를 넘겨주면 실행합니다.</p>
         <blockquote>
 &lt;script src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;hangul.josa.min.js&quot;&gt;&lt;/script&gt;
