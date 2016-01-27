@@ -7,7 +7,7 @@
     <style>
         h1{font-size:24px;}
         h2{font-size:20px;}
-        body,table,select{font-size:12px;line-height: 1.4;}
+        body,table,select,input{font-size:12px;line-height: 1.4;}
         blockquote,
         fieldset{margin:1em 0;background:#333;color:#fff;font-family:monospace;padding:1em;border:0;}
         blockquote{white-space:pre;padding: 0 1em;}
@@ -51,10 +51,10 @@
                 <option>와/과</option>
                 <option>로/으로</option>
             </select>
-            &quot;);
+            &quot;); // 하나를 선택해서 인자를 넘겨 주면 실행합니다.
         </fieldset>
         <figure>
-            <figcaption>실행 결과 및 처리 로직</figcaption>
+            <figcaption>실행 결과 확인</figcaption>
             <table>
                 <thead>
                     <tr>
@@ -64,6 +64,23 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <th scope="row">직접 입력</th>
+                        <td><input class="e" value="user input"></td>
+                        <td>입력한 문자열 발음 종성 여부에 따라</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">하나 선택</th>
+                        <td>
+                            <select class="e">
+                                <option>부모</option>
+                                <option>부모님</option>
+                                <option>apple</option>
+                                <option>ace</option>
+                            </select>
+                        </td>
+                        <td>선택한 문자열 발음 종성 여부에 따라</td>
+                    </tr>
                     <tr>
                         <th scope="row">사<em>과</em></th>
                         <td><strong class="e">사과</strong></td>
@@ -235,6 +252,11 @@
                         <td>&quot;코멘트&quot;라고 읽기 때문에</td>
                     </tr>
                     <tr>
+                        <th scope="row">aler<em>t</em></th>
+                        <td><strong class="e">alert</strong></td>
+                        <td>&quot;알럿&quot;이라고 읽기 때문에</td>
+                    </tr>
+                    <tr>
                         <th scope="row">gur<em>u</em></th>
                         <td><strong class="e">guru</strong></td>
                         <td>&quot;구루&quot;라고 읽기 때문에</td>
@@ -275,7 +297,7 @@
                         <td>특수문자는 읽지 않기 때문에</td>
                     </tr>
                     <tr>
-                        <th scope="row"></th>
+                        <th scope="row">...</th>
                         <td><strong class="e"></strong></td>
                         <td>제시어 없는 경우</td>
                     </tr>
