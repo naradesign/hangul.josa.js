@@ -7,7 +7,7 @@
             var $this = $(this), // 선택한 DOM 요소.
                 isInput = $this.is("input"), // 인풋 요소인가? value 값을 취할 것이다.
                 isSelect = $this.is("select"), // 셀렉트 요소인가? "option:selected" 요소의 value 값을 취할 것이다.
-                s = ":selected",
+                s = ":selected", // 셀렉트 요소에서 사용자가 선택한 option을 의미함.
                 string; // 선택한 DOM 요소에서 가져올 문자열을 담는 변수. DOM 형태에 따라서 다른 값을 담게 된다.
 
             if( isInput ){ // 인풋 요소인 경우.
@@ -20,13 +20,13 @@
 
             // 조사 붙이는 함수.
             var printJosa = function(){
-                var $next = $this.next(),
+                var $next = $this.next(), // 선택한 DOM 요소 우측에 .josa 요소가 있는지 확인하는 동시에 조사를 출력하는 컨테이너 요소.
                     str = string.replace(/[^가-힣a-z\d]/gi, ""), // 한글+영문+숫자만 남기고 공백과 특수문자(일문, 중문 포함)를 모두 제거.
                     hasFinal = ( /[가-힣]$/.test(str) && (str.substr(-1).charCodeAt(0) - 0xac00) % 28 > 0 ) || ( /[가-힣]\d*[013678]$/.test(str) || /[a-z]\d*[1789]$/i.test(str) ) || ( /([clmnp]|[blnt](e)|[co](k)|[aeiou](t)|mb|ng|lert)$/i.test(str) ), // 한글, 숫자, 알파벳 발음에 종성이 있는가?
                     josa; // 덧붙일 조사의 최종 값.
 
-                var setJosa = function(josaCase){ // josaCase는 josaOutput 객체의 값으로써 출력해야 할 조사 값이고 배열이다.
-                    // josaInput은 플러그인 사용자로부터 받은 인자다.
+                var setJosa = function(josaCase){ // josaCase는 출력해야 할 조사 배열.
+                    // josaInput은 플러그인 사용자로부터 받은 인자.
                     if( josaInput === "이/가" ){ // 주격 조사.
                         josa = josaCase[0]; // "이(가)", "이", "가"
                     } else if ( josaInput === "을/를" ){ // 목적격 조사.
@@ -44,11 +44,11 @@
 
                 // 문자열의 특징에 따라서 어떤 조사를 붙여야 할지 분기 처리한다.
                 if( !/([가-힣]|\d|[a-z])$/i.test(str) ){ // 어떤 조사를 붙여야 할지 모르는 경우.
-                    setJosa(["이(가)", "을(를)", "은(는)", "와(과)", "로(으로)"]); // ["이(가)", "을(를)", "은(는)", "와(과)", "로(으로)"] 를 인자로 넘긴다.
+                    setJosa(["이(가)", "을(를)", "은(는)", "와(과)", "로(으로)"]);
                 } else if( hasFinal ){ // 발음에 종성 있는 경우.
-                    setJosa(["이", "을", "은", "과", "으로"]); // ["이", "을", "은", "과", "으로"] 를 인자로 넘긴다.
+                    setJosa(["이", "을", "은", "과", "으로"]);
                 } else if( !hasFinal ){ // 발음에 종성 없는 경우.
-                    setJosa(["가", "를", "는", "와", "로"]); // ["가", "를", "는", "와", "로"] 를 인자로 넘긴다.
+                    setJosa(["가", "를", "는", "와", "로"]);
                 }
 
                 // 결정된 josa 값을 DOM 요소 우측에 출력.
