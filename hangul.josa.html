@@ -17,12 +17,13 @@
         table{width:100%;border-collapse:collapse;border-top:1px solid #ccc;border-left:1px solid #ccc;}
         th,td{padding:3px 5px;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
         th{background:#eee;}
+        td input,td select{width:80px;box-sizing:border-box;}
         em{font-style:normal;color:red;}
         .josa{color:red;}
     </style>
 </head>
 <body>
-    <h1>한글 조사 출력기 <a href="https://github.com/naradesign/hangul.josa.js">hangul.josa.js <sup>1.09KB</sup></a> <sup>jQuery plugin</sup></h1>
+    <h1>한글 조사 출력기 <a href="https://github.com/naradesign/hangul.josa.js">hangul.josa.js <sup>946 bytes</sup></a> <sup>jQuery plugin</sup></h1>
     <p>맥락에 맞는 한글 조사(은/는, 이/가, 을/를, 와/과, 로/으로)를 붙여주는 기능을 합니다. 한글 뿐만 아니라 숫자와 알파벳 발음 끝에 종성이 있는지 여부에 따라 적절한 한글 조사를 붙여 줍니다.</p>
     <section>
         <h2>한글 조사 출력기 사용법</h2>
@@ -252,9 +253,14 @@
                         <td>&quot;코멘트&quot;라고 읽기 때문에</td>
                     </tr>
                     <tr>
-                        <th scope="row">aler<em>t</em></th>
+                        <th scope="row">a<em>t</em></th>
+                        <td><strong class="e">at</strong></td>
+                        <td>&quot;앳&quot;이라고 읽기 때문에(a, e, i, o, u 뒤에서 마지막 t 종성 처리)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">a<em>lert</em></th>
                         <td><strong class="e">alert</strong></td>
-                        <td>&quot;알럿&quot;이라고 읽기 때문에</td>
+                        <td>&quot;알럿&quot;이라고 읽기 때문에(ler 뒤에서 마지막 t 종성 처리)</td>
                     </tr>
                     <tr>
                         <th scope="row">gur<em>u</em></th>
@@ -287,12 +293,12 @@
                         <td>&quot;비즈&quot;라고 읽기 때문에</td>
                     </tr>
                     <tr>
-                        <th scope="row">父母</th>
+                        <th scope="row"><em>父母</em></th>
                         <td><strong class="e">父母</strong></td>
                         <td>한글, 영문, 숫자 이외의 발음은 어떤 조사를 출력할지 알 수 없기 때문에</td>
                     </tr>
                     <tr>
-                        <th scope="row">부모!</th>
+                        <th scope="row">부모<em>!</em></th>
                         <td><strong class="e">부모!</strong></td>
                         <td>특수문자는 읽지 않기 때문에</td>
                     </tr>
@@ -310,7 +316,7 @@
         <p>Copyright (c) 2016 ChanMyeong Jeong | Under the MIT license.</p>
     </footer>
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script src="hangul.josa.min.js"></script>
+    <script src="hangul.josa.js"></script>
     <script>
         $(document).on("change", "#test-case", function(){
             $(".e").josa( $(this).find(":selected").val() );

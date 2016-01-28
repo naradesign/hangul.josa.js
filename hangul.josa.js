@@ -26,24 +26,19 @@
                     josa; // 덧붙일 조사의 최종 값.
 
                 var setJosa = function(josaCase){ // josaCase는 josaOutput 객체의 값으로써 출력해야 할 조사 값이고 배열이다.
-                    switch(josaInput){ // josaInput은 플러그인 사용자로부터 받은 인자다.
-                        case "이/가": // 주격 조사.
-                            josa = josaCase[0]; // "이(가)", "이", "가"
-                            break;
-                        case "을/를": // 목적격 조사.
-                            josa = josaCase[1]; // "을(를)", "을", "를"
-                            break;
-                        case "은/는": // 보격 조사.
-                            josa = josaCase[2]; // "은(는)", "은", "는"
-                            break;
-                        case "와/과": // 접속 조사.
-                            josa = josaCase[3]; // "와(과)", "과", "와"
-                            break;
-                        case "로/으로": // 부사격 조사.
-                            josa = josaCase[4]; // "로(으로)", "으로", "로"
-                            break;
-                        default:
-                            josa = ""; // 받아온 josaInput 인자가 없을 때.
+                    // josaInput은 플러그인 사용자로부터 받은 인자다.
+                    if( josaInput === "이/가" ){ // 주격 조사.
+                        josa = josaCase[0]; // "이(가)", "이", "가"
+                    } else if ( josaInput === "을/를" ){ // 목적격 조사.
+                        josa = josaCase[1]; // "을(를)", "을", "를"
+                    } else if ( josaInput === "은/는" ){ // 보격 조사.
+                        josa = josaCase[2]; // "은(는)", "은", "는"
+                    } else if ( josaInput === "와/과" ){ // 접속 조사.
+                        josa = josaCase[3]; // "와(과)", "과", "와"
+                    } else if ( josaInput === "로/으로" ){ // 부사격 조사.
+                        josa = josaCase[4]; // "로(으로)", "으로", "로"
+                    } else { // 받아온 josaInput 인자가 없을 때.
+                        josa = "";
                     }
                 };
 
