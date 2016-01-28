@@ -1,4 +1,4 @@
-/*! https://github.com/naradesign/korean.josa.js | Copyright (c) 2016 ChanMyeong Jeong | Under the MIT license. */
+/*! https://github.com/naradesign/hangul.josa.js | Copyright (c) 2016 ChanMyeong Jeong | Under the MIT license. */
 ;(function($){
     "use strict";
     $.fn.josa = function(josaInput){ // "이/가", "을/를", "은/는", "와/과", "로/으로" 중 하나를 인자로 받아야 한다.
