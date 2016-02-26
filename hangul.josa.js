@@ -21,7 +21,7 @@
             // 조사 붙이는 함수.
             var printJosa = function(){
                 var $next = $this.next(), // 선택한 DOM 요소 우측에 .josa 요소가 있는지 확인하는 동시에 조사를 출력하는 컨테이너 요소.
-                    str = string.replace(/[^가-힣a-z\d]/gi, ""), // 한글+영문+숫자만 남기고 공백과 특수문자(일문, 중문 포함)를 모두 제거.
+                    str = string.replace(/\(.*\)/gi, "").replace(/[^가-힣a-z\d]/gi, ""), // 한글+영문+숫자만 남기고, 괄호 및 괄호 속 문자와 공백 및 특수문자(일문, 중문 포함)를 모두 제거.
                     hasFinal = ( /[가-힣]$/.test(str) && (str.substr(-1).charCodeAt(0) - 0xac00) % 28 > 0 ) || ( /[가-힣]\d*[013678]$/.test(str) || /[a-z]\d*[1789]$/i.test(str) ) || ( /([clmnp]|[blnt](e)|[co](k)|[aeiou](t)|mb|ng|lert)$/i.test(str) ), // 한글, 숫자, 알파벳 발음에 종성이 있는가?
                     josa; // 덧붙일 조사의 최종 값.
 
